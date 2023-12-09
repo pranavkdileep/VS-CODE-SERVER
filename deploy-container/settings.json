@@ -1,0 +1,9 @@
+{
+  "workbench.colorTheme": "Default Light+",
+  "git.postCommitCommand": "sync",
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "editor.minimap.enabled": false,
+  "emmet.triggerExpansionOnTab": true,
+}
