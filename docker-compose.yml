@@ -1,0 +1,28 @@
+version: '3.8'  # You can specify a different version if needed
+
+services:
+  chbboee-server:
+    build:
+      context: .  # The build context is the current directory containing the Dockerfile
+      dockerfile: Dockerfile  # The name of your Dockerfile (you can change if named differently)
+    container_name: chbboee-server-container  # You can rename the container
+    ports:
+      - "7860:7860"  # Map the container's port 7860 to the host
+    environment:
+      - HTTPS_ENABLED=false  # Environment variables from your Dockerfile
+      - PORT=7860
+    volumes:
+      - ./deploy-container/settings.json:/home/coder/.local/share/code-server/User/settings.json  # Map VS Code settings
+      - ./deploy-container/rclone-tasks.json:/tmp/rclone-tasks.json  # Map rclone tasks if needed
+      - ./keyboard:/etc/default/keyboard  # Custom keyboard config
+      - ./requirements.txt:/home/coder/requirements.txt  # Python requirements file
+    entrypoint: ["/usr/bin/deploy-container-entrypoint.sh"]  # Custom entrypoint script
+    stdin_open: true  # Enable interactive mode
+    tty: true  # Allocate a pseudo-TTY for the container
+    restart: unless-stopped  # Restart policy
+
+  # Add additional services if needed (e.g., databases, reverse proxies, etc.)
+
+networks:
+  default:
+    driver: bridge  # You can customize the network if needed
